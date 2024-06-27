@@ -2,9 +2,13 @@ import css from "./UserForm.module.css";
 
 export default function UserForm() {
   //у формі є сабміт,  передаємо handleSubmit, за змовчуванням event
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(handleSubmit);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target.elements;
+    console.log(form.username.value, form.role.value);
+    //console.log(event.turget.elements.username.value) так в неконтрольованій формі отримують значення
+    // <=так зібрали поточні значення
+    // console.log(handleSubmit);
   };
   return (
     <form className={css.form} onSubmit={handleSubmit}>
