@@ -8,11 +8,11 @@ export default function UserForm() {
   };
   return (
     <form className={css.form} onSubmit={handleSubmit}>
-      <div className={css.grup}>
+      <div className={css.group}>
         <label>Username:</label>
         <input type="text" name="username"></input>
       </div>
-      <div className={css.grup}>
+      <div className={css.group}>
         <label>Role:</label>
         <select name="role">
           <option value="guest">Guest</option>
@@ -20,7 +20,7 @@ export default function UserForm() {
           <option value="admin">Admin</option>
         </select>
       </div>
-      <buton type="submit">Submit</buton>
+      <button type="submit">Submit</button>
     </form>
   );
 }
