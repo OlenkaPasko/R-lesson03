@@ -2,7 +2,8 @@ import { useCallback, useState } from "react";
 import TextInput from "../TextInput/TextInput";
 import css from "./App.module.css";
 //import UserForm from '../UserForm/UserForm';
-import LangSwitcher from "../LangSwitcher/LangSwitcer";
+//import LangSwitcher from "../LangSwitcher/LangSwitcer";
+import OrderForm from "../OrderForm/OrderForm";
 
 export default function App() {
   const addUser = (newUser) => {
@@ -34,15 +35,16 @@ export default function App() {
   return (
     <div className={css.container}>
       <h1>Forms in React</h1>
-      <header>
+      {/*<header>
         <LangSwitcher value={lang} onSelect={changeLang} />
       </header>
       <TextInput value={inputValue} onType={changeInputValue} />
-
       {/*<div>
         <input type="text" value={inputValue} onChange={handleChange} />
       </div>*/}
       {/*<UserForm onAdd={addUser} />*/}
+
+      <OrderForm/>
     </div>
   );
 }
