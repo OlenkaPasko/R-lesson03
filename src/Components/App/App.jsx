@@ -32,6 +32,9 @@ export default function App() {
   //console.log(event.target.value);
   //setInputValue(event.target.value);
   //}
+  const makeOrder = (newOrder) => {
+    console.log("Make new order", newOrder);
+  }
   return (
     <div className={css.container}>
       <h1>Forms in React</h1>
@@ -44,7 +47,7 @@ export default function App() {
       </div>*/}
       {/*<UserForm onAdd={addUser} />*/}
 
-      <OrderForm/>
+      <OrderForm onOrder={makeOrder} />
     </div>
   );
 }
