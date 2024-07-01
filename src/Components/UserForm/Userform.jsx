@@ -7,6 +7,7 @@ export default function UserForm({ onAdd }) {
   const id = useId();
 
   //у формі є сабміт,  передаємо handleSubmit, за змовчуванням event
+  //це приклад неконтрольованої форми
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
