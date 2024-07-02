@@ -1,9 +1,11 @@
 import { Formik, Form, Field } from "formik";
 //import { useId } from "react";
+//import * as Yup from "yup";
 import css from "./UserForm.module.css";
-
+//console.log(Yup)
 //Заняття форми 2ч.
 //values;об'єкт поточних значень форми, actions - дія
+//opts: []порожній масив,тому що так зберігається групи чек боксів
 export default function UserForm({ onAdd }) {
   const handleSubmit = (values, actions) => {
     actions.resetForm();//скидання форми
@@ -15,7 +17,8 @@ export default function UserForm({ onAdd }) {
         username: "",
         email: "",
         role: "user",
-        coment: "coment"
+        coment: "coment",
+        opts:[]
       }}
       onSubmit={handleSubmit}
     >
