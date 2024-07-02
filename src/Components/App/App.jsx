@@ -1,30 +1,32 @@
-import { useCallback, useState } from "react";
-import TextInput from "../TextInput/TextInput";
+//import { useCallback, useState } from "react";
+//import TextInput from "../TextInput/TextInput";
 import css from "./App.module.css";
-//import UserForm from '../UserForm/UserForm';
+import UserForm from "../UserForm/UserForm";
 //import LangSwitcher from "../LangSwitcher/LangSwitcer";
-import OrderForm from "../OrderForm/OrderForm";
+//import OrderForm from "../OrderForm/OrderForm";
 
 export default function App() {
   const addUser = (newUser) => {
-    console.log("Send to backend", newUser);
+    console.log("Adding new user", newUser);
   };
-  const [lang, setLang] = useState("en");
-  const changeLang = newLange => {
-    setLang(newLange);
-  }
 
+  //1частина  2частина<h1>Forms with Formik</h1> <UserForm onAdd={addUser} />;
 
-
-
+  // const addUser = (newUser) => {
+  // console.log("Send to backend", newUser);
+  // };
+  //const [lang, setLang] = useState("en");
+  //const changeLang = newLange => {
+  //  setLang(newLange);
+  //}
   // контрольваний елемент, не форма, інпут значення якого  зберігається в стані
   //у контрольованого елемента є два пропси, перший - це Value/ inputValue- це поточне значення стану
   //руга частина, це кожен раз коли ми змінюємо значення елементу, поія інпут, а в Реакті onChange.
   //Це поточне значення потрібно записати в стан, оголошуємо handleChange
-  const [inputValue, setInputValue] = useState("");
-  const changeInputValue = (newValue) => {
-    setInputValue(newValue);
-  };
+  //const [inputValue, setInputValue] = useState("");
+  //const changeInputValue = (newValue) => {
+  // setInputValue(newValue);
+  //};
   //const handleChange = (event) => {
   // console.log(event.target.value);
   // setInputValue(event.target.value);
@@ -32,12 +34,15 @@ export default function App() {
   //console.log(event.target.value);
   //setInputValue(event.target.value);
   //}
-  const makeOrder = (newOrder) => {
-    console.log("Make new order", newOrder);
-  }
+  //const makeOrder = (newOrder) => {
+  // console.log("Make new order", newOrder);
+  //}
   return (
     <div className={css.container}>
-      <h1>Forms in React</h1>
+      <h1>Forms with Formik</h1>
+      <UserForm onAdd={addUser} />
+
+      {/*<h1>Forms in React</h1>*/}
       {/*<header>
         <LangSwitcher value={lang} onSelect={changeLang} />
       </header>
@@ -46,8 +51,7 @@ export default function App() {
         <input type="text" value={inputValue} onChange={handleChange} />
       </div>*/}
       {/*<UserForm onAdd={addUser} />*/}
-
-      <OrderForm onOrder={makeOrder} />
+      {/*<OrderForm onOrder={makeOrder} />*/}
     </div>
   );
 }

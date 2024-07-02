@@ -5,7 +5,6 @@ import { useId , useState } from "react";
 const initialValues = {
   size: "sm",
   color: "red",
-  message: "",
 };
 //[event.target.name]обчислювальні дані об'єкта з квадратними дужками
 
