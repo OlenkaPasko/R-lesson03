@@ -1,38 +1,42 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 //import { useId } from "react";
 import css from "./UserForm.module.css";
 
 //Заняття форми 2ч.
-
+//values;об'єкт поточних значень форми, actions - дія
 export default function UserForm({ onAdd }) {
-  const handleSubmit = () => {};
+  const handleSubmit = (values, actions) => {
+    actions.resetForm();//скидання форми
+  };
 
   return (
     <Formik
       initialValues={{
         username: "",
         email: "",
+        role: "user",
+        coment: "coment"
       }}
       onSubmit={handleSubmit}
     >
       <Form className={css.form}>
         <div className={css.formGroup}>
           <label>Username:</label>
-          <input className={css.input} type="text" name="username" />
+          <Field className={css.input} type="text" name="username" />
         </div>
 
         <div className={css.formGroup}>
           <label>Email:</label>
-          <input className={css.input} type="email" name="email" />
+          <Field className={css.input} type="email" name="email" />
         </div>
 
-        {/*<div className={css.formGroup}>
+        <div className={css.formGroup}>
            <label>Role:</label>
-          <input as="select" className={css.input} name="role">
+          <Field as="select" className={css.input} name="role">
             <option value="guest">Guest</option>
             <option value="user">User</option>
             <option value="admin">Admin</option>
-          </input>
+          </Field>
         </div>
 
         <div className={css.formGroup}>
@@ -56,7 +60,7 @@ export default function UserForm({ onAdd }) {
         <div className={css.formGroup}>
           <label>Comment:</label>
           <Field as="textarea" className={css.input} name="comment"></Field>
-    </div>*/}
+    </div>
 
         <button type="submit">Submit</button>
       </Form>
