@@ -1,13 +1,15 @@
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 //import { useId } from "react";
 import * as Yup from "yup";
 import css from "./UserForm.module.css";
 const UserShema = Yup.object().shape({
-  username: Yup.string().min(3, "Minimum 3 letters"),
-  email: Yup.string
-    .required("this field is required")
-    .email("Must be email format")
-    .required("this field is required"),
+  username: Yup.string()
+    .min(3, "Minimum 3 letters")
+    .max(30, "Maximum 30 letters")
+    .required("This field is required"),
+  email: Yup.string()
+    .email("Must be an email format")
+    .required("This field is required"),
   role: Yup.string()
     .oneOf(["guest", "user", "admin"])
     .required("this field is required"),
@@ -17,16 +19,14 @@ const UserShema = Yup.object().shape({
   opts: Yup.array().of(Yup.string()).required("this field is required"),
 });
 
-
-
-
 //console.log(Yup)
 //Заняття форми 2ч.
 //values;об'єкт поточних значень форми, actions - дія
 //opts: []порожній масив,тому що так зберігається групи чек боксів
 export default function UserForm({ onAdd }) {
   const handleSubmit = (values, actions) => {
-    actions.resetForm();//скидання форми
+    onAdd(values);
+    actions.resetForm(); //скидання форми
   };
 
   return (
@@ -45,11 +45,17 @@ export default function UserForm({ onAdd }) {
         <div className={css.formGroup}>
           <label>Username:</label>
           <Field className={css.input} type="text" name="username" />
+          <ErrorMessage
+            className={css.error}
+            name="username"
+            component="span"
+          />
         </div>
 
         <div className={css.formGroup}>
           <label>Email:</label>
           <Field className={css.input} type="email" name="email" />
+          <ErrorMessage className={css.error} name="email" />
         </div>
 
         <div className={css.formGroup}>
@@ -59,6 +65,7 @@ export default function UserForm({ onAdd }) {
             <option value="user">User</option>
             <option value="admin">Admin</option>
           </Field>
+          <ErrorMessage className={css.error} name="role" component="span" />
         </div>
 
         <div className={css.formGroup}>
@@ -77,11 +84,13 @@ export default function UserForm({ onAdd }) {
               Three
             </label>
           </div>
+          <ErrorMessage className={css.error} name="opts" component="span" />
         </div>
 
         <div className={css.formGroup}>
           <label>Comment:</label>
           <Field as="textarea" className={css.input} name="comment"></Field>
+          <ErrorMessage className={css.error} name="comment" component="span" />
         </div>
 
         <button type="submit">Submit</button>
