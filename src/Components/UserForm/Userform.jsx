@@ -1,7 +1,25 @@
 import { Formik, Form, Field } from "formik";
 //import { useId } from "react";
-//import * as Yup from "yup";
+import * as Yup from "yup";
 import css from "./UserForm.module.css";
+const UserShema = Yup.object().shape({
+  username: Yup.string().min(3, "Minimum 3 letters"),
+  email: Yup.string
+    .required("this field is required")
+    .email("Must be email format")
+    .required("this field is required"),
+  role: Yup.string()
+    .oneOf(["guest", "user", "admin"])
+    .required("this field is required"),
+  coment: Yup.string()
+    .max(256, "Maximum 256 letters")
+    .required("this field is required"),
+  opts: Yup.array().of(Yup.string()).required("this field is required"),
+});
+
+
+
+
 //console.log(Yup)
 //Заняття форми 2ч.
 //values;об'єкт поточних значень форми, actions - дія
@@ -18,8 +36,9 @@ export default function UserForm({ onAdd }) {
         email: "",
         role: "user",
         coment: "coment",
-        opts:[]
+        opts: [],
       }}
+      validationSchema={UserShema}
       onSubmit={handleSubmit}
     >
       <Form className={css.form}>
@@ -34,7 +53,7 @@ export default function UserForm({ onAdd }) {
         </div>
 
         <div className={css.formGroup}>
-           <label>Role:</label>
+          <label>Role:</label>
           <Field as="select" className={css.input} name="role">
             <option value="guest">Guest</option>
             <option value="user">User</option>
@@ -63,7 +82,7 @@ export default function UserForm({ onAdd }) {
         <div className={css.formGroup}>
           <label>Comment:</label>
           <Field as="textarea" className={css.input} name="comment"></Field>
-    </div>
+        </div>
 
         <button type="submit">Submit</button>
       </Form>
