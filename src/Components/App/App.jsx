@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import css from "./App.module.css";
 import axios from "axios";
+import ArticleList from "../ArticleList/ArticleList";
 
 //import UserForm from "../UserForm/UserForm";
 //import LangSwitcher from "../LangSwitcher/LangSwitcer";
@@ -56,6 +57,8 @@ export default function App() {
   return (
     <div className={css.container}>
       <h1>HTTP requests in React</h1>
+      <ArticleList items={articles} />
+      
 
       {/*<h1>Forms with Formik</h1>
       <UserForm onAdd={addUser} />
