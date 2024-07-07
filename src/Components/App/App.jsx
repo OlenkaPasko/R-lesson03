@@ -1,15 +1,30 @@
 //import { useCallback, useState } from "react";
 //import TextInput from "../TextInput/TextInput";
+import { useEffect, useState } from "react";
 import css from "./App.module.css";
-import UserForm from "../UserForm/UserForm";
+import axios from "axios";
+
+//import UserForm from "../UserForm/UserForm";
 //import LangSwitcher from "../LangSwitcher/LangSwitcer";
 //import OrderForm from "../OrderForm/OrderForm";
 
 export default function App() {
-  const addUser = (newUser) => {
-    console.log("Adding new user", newUser);
-  };
 
+  const [articles, setArticles] = useState([])
+  useEffect(() => {
+    //axios.get("http://hn.algolia.com/api/v1/search?query=react").then().catch().finally();
+    async function getArticles() {
+      const response = await axios.get(
+        "http://hn.algolia.com/api/v1/search?query=react"
+      );
+      setArticles(response.data.hits);
+    }
+    getArticles();
+  }, []);
+
+  //const addUser = (newUser) => {
+  // console.log("Adding new user", newUser);
+  // };
   //1частина  2частина<h1>Forms with Formik</h1> <UserForm onAdd={addUser} />;
 
   // const addUser = (newUser) => {
@@ -37,9 +52,12 @@ export default function App() {
   //const makeOrder = (newOrder) => {
   // console.log("Make new order", newOrder);
   //}
+
   return (
     <div className={css.container}>
-      <h1>Forms with Formik</h1>
+      <h1>HTTP requests in React</h1>
+
+      {/*<h1>Forms with Formik</h1>
       <UserForm onAdd={addUser} />
 
       {/*<h1>Forms in React</h1>*/}
