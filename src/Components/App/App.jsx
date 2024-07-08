@@ -35,18 +35,9 @@ export default function App() {
   //}, []);
   //маємо три стани і так працюємо з шттп запитом, патрн. 1,2 вар.
   const handleSearch = async (newTopic) => {
-    try {
-      setLoading(true); //загрузка
-      setArticles([]); //це длятого,щоб зникав попередній запит
-      setError(false); //перд кожним запитом скидаємо помилку
-      setTopic(newTopic);//зберегти цей топшл у стан
-      const data = await fetchArticles(topic, page);
-      setArticles(data); //це буде по результату
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
+    setArticles([]); //це длятого,щоб зникав попередній запит
+    setPage(1);
+    setTopic(newTopic);
   };
   const handleLoadMore = () => {
     setPage(page + 1);
@@ -55,10 +46,12 @@ export default function App() {
   useEffect(() => {
     async function getArticles() {
       try {
-        setLoading(true);
+        setLoading(true); //загрузка
         setError(false);
-        const data = await fetchArticles(newTopic, page);
-        setArticles(data);
+        const data = await fetchArticles(topic, page);
+        setArticles(prevArticles => {
+          return [...prevArticles,...data];
+        });
       } catch (error) {
         setError(true);
       } finally {
