@@ -1,11 +1,10 @@
 //import { useCallback, useState } from "react";
 //import TextInput from "../TextInput/TextInput"
-import ArticleList from "../ArticleList/ArticleList";;
+import ArticleList from "../ArticleList/ArticleList";
 import { useEffect, useState } from "react";
 import { fetchArticles } from "../../articles-api";
 import css from "./App.module.css";
 import SearchForm from "../SearchForm/SearchForm";
-
 
 //import UserForm from "../UserForm/UserForm";
 //import LangSwitcher from "../LangSwitcher/LangSwitcer";
@@ -44,13 +43,16 @@ export default function App() {
   };
   //щоб зреагувати на сторінку і виконати шттп запит
   useEffect(() => {
+    if (topic === "") {
+      return;
+    } //умова щоб не завантажувати код нижче,монтування
     async function getArticles() {
       try {
         setLoading(true); //загрузка
         setError(false);
         const data = await fetchArticles(topic, page);
-        setArticles(prevArticles => {
-          return [...prevArticles,...data];
+        setArticles((prevArticles) => {
+          return [...prevArticles, ...data];
         });
       } catch (error) {
         setError(true);
@@ -59,7 +61,7 @@ export default function App() {
       }
     }
     getArticles();
-  }, [page,topic]);
+  }, [page, topic]);
   //const addUser = (newUser) => {
   // console.log("Adding new user", newUser);
   // };
