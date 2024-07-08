@@ -35,7 +35,7 @@ export default function App() {
   //маємо три стани і так працюємо з шттп запитом, патрн. 1,2 вар.
   const handleSearch = async (newTopic) => {
     setArticles([]); //це длятого,щоб зникав попередній запит
-    setPage(1);
+    setPage(1);//це щоб шукало з першої сторінки
     setTopic(newTopic);
   };
   const handleLoadMore = () => {
@@ -97,11 +97,13 @@ export default function App() {
     <div className={css.container}>
       <h1>HTTP requests in React</h1>
       <SearchForm onSearch={handleSearch} />
+      {articles.length > 0 && <ArticleList items={articles} />}
       {loading && <p>Loading articles...</p>}
       {error && <p>Oops...The was an error,pleas reload this page</p>}
       {/*Не треба рендерити порожній елемент,завжди є умова/в даному кейсі не буде порожнього юл, а буде рендеритися коли приходитимуть дані з бекенду */}
-      {articles.length > 0 && <ArticleList items={articles} />}
-      <button onClick={handleLoadMore}>Load more</button>
+      {articles.length > 0 && !loading && (
+        <button onClick={handleLoadMore}>Load more</button>
+      )}
 
       {/*<h1>Forms with Formik</h1>
       <UserForm onAdd={addUser} />
