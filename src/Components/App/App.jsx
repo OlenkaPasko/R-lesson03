@@ -16,6 +16,7 @@ export default function App() {
   const [error, setError] = useState(false);
   const [page, setPage] = useState(1);
   const [topic, setTopic] = useState("");
+  const [totalPages, setTotalPages] = useState(999);
 
   //useEffect(() => {
   //axios.get("http://hn.algolia.com/api/v1/search?query=react").then().catch().finally();
@@ -51,6 +52,7 @@ export default function App() {
         setLoading(true); //загрузка
         setError(false);
         const data = await fetchArticles(topic, page);
+        setTotalPages(data.nbPages);
         setArticles((prevArticles) => {
           return [...prevArticles, ...data];
         });
@@ -96,6 +98,7 @@ export default function App() {
   return (
     <div className={css.container}>
       <h1>HTTP requests in React</h1>
+      {page >= totalPages && <p>THIS IS THE END! RUN FOOLS!</p>}
       <SearchForm onSearch={handleSearch} />
       {articles.length > 0 && <ArticleList items={articles} />}
       {loading && <p>Loading articles...</p>}
