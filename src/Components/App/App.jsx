@@ -35,9 +35,11 @@ export default function App() {
   //маємо три стани і так працюємо з шттп запитом, патрн. 1,2 вар.
   const handleSearch = async (newTopic) => {
     try {
-      setLoading(true);
-      const data = await fetchArticles(newTopic)
-      setArticles(data);//це буде по результату
+      setLoading(true); //загрузка
+      setArticles([]); //це длятого,щоб зникав попередній запит
+      setError(false);//перд кожним запитом скидаємо помилку
+      const data = await fetchArticles(newTopic);
+      setArticles(data); //це буде по результату
     } catch(error) {
       setError(true);
       

@@ -1,7 +1,7 @@
 import { Field, Form, Formik } from "formik";
 import css from "./SearchForm.module.css";
 
-export default function SearchForm(onSearch) {
+export default function SearchForm({ onSearch }) {
   return (
     <Formik
       initialValues={{ topic: "" }}
