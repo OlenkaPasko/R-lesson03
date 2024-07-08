@@ -1,9 +1,10 @@
 //import { useCallback, useState } from "react";
-//import TextInput from "../TextInput/TextInput";
+//import TextInput from "../TextInput/TextInput"
+import ArticleList from "../ArticleList/ArticleList";;
 import { useEffect, useState } from "react";
+import { fetchArticles } from "../../articles-api";
 import css from "./App.module.css";
-import axios from "axios";
-import ArticleList from "../ArticleList/ArticleList";
+
 
 //import UserForm from "../UserForm/UserForm";
 //import LangSwitcher from "../LangSwitcher/LangSwitcer";
@@ -11,14 +12,15 @@ import ArticleList from "../ArticleList/ArticleList";
 
 export default function App() {
 
-  const [articles, setArticles] = useState([])
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     //axios.get("http://hn.algolia.com/api/v1/search?query=react").then().catch().finally();
     async function getArticles() {
-      const response = await axios.get(
-        "http://hn.algolia.com/api/v1/search?query=react"
-      );
-      setArticles(response.data.hits);
+      setLoading(true);
+      const data = await fetchArticles("react");
+      setArticles(data);
+      setLoading(false);
     }
     getArticles();
   }, []);
@@ -57,8 +59,9 @@ export default function App() {
   return (
     <div className={css.container}>
       <h1>HTTP requests in React</h1>
-      <ArticleList items={articles} />
-      
+      {loading && <p>Loading articles...</p>}
+      {/*Не треба рендерити порожній елемент,завжди є умова/в даному кейсі не буде порожнього юл, а буде рендеритися коли приходитимуть дані з бекенду */}
+      {articles.length > 0 && <ArticleList items={articles} />}
 
       {/*<h1>Forms with Formik</h1>
       <UserForm onAdd={addUser} />
