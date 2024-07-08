@@ -14,13 +14,20 @@ export default function App() {
 
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
   useEffect(() => {
     //axios.get("http://hn.algolia.com/api/v1/search?query=react").then().catch().finally();
     async function getArticles() {
-      setLoading(true);
-      const data = await fetchArticles("react");
-      setArticles(data);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const data = await fetchArticles("react");
+        setArticles(data);
+      } catch (error) {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
     }
     getArticles();
   }, []);
@@ -60,6 +67,7 @@ export default function App() {
     <div className={css.container}>
       <h1>HTTP requests in React</h1>
       {loading && <p>Loading articles...</p>}
+      {error && <p>Oops...The was an error,pleas reload this page</p>}
       {/*Не треба рендерити порожній елемент,завжди є умова/в даному кейсі не буде порожнього юл, а буде рендеритися коли приходитимуть дані з бекенду */}
       {articles.length > 0 && <ArticleList items={articles} />}
 
