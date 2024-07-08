@@ -12,42 +12,61 @@ import SearchForm from "../SearchForm/SearchForm";
 //import OrderForm from "../OrderForm/OrderForm";
 
 export default function App() {
-
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [page, setPage] = useState(1);
+  const [topic, setTopic] = useState("");
 
   //useEffect(() => {
-    //axios.get("http://hn.algolia.com/api/v1/search?query=react").then().catch().finally();
-   // async function getArticles() {
-    //  try {
-     //   setLoading(true);
-     //   const data = await fetchArticles("react");
-     //   setArticles(data);
-     // } catch (error) {
-     //   setError(true);
-     // } finally {
-     //   setLoading(false);
-     // }
-    //}
-   // getArticles();
+  //axios.get("http://hn.algolia.com/api/v1/search?query=react").then().catch().finally();
+  // async function getArticles() {
+  //  try {
+  //   setLoading(true);
+  //   const data = await fetchArticles("react");
+  //   setArticles(data);
+  // } catch (error) {
+  //   setError(true);
+  // } finally {
+  //   setLoading(false);
+  // }
+  //}
+  // getArticles();
   //}, []);
   //маємо три стани і так працюємо з шттп запитом, патрн. 1,2 вар.
   const handleSearch = async (newTopic) => {
     try {
       setLoading(true); //загрузка
       setArticles([]); //це длятого,щоб зникав попередній запит
-      setError(false);//перд кожним запитом скидаємо помилку
-      const data = await fetchArticles(newTopic);
+      setError(false); //перд кожним запитом скидаємо помилку
+      setTopic(newTopic);//зберегти цей топшл у стан
+      const data = await fetchArticles(topic, page);
       setArticles(data); //це буде по результату
-    } catch(error) {
+    } catch (error) {
       setError(true);
-      
     } finally {
       setLoading(false);
     }
-}
-
+  };
+  const handleLoadMore = () => {
+    setPage(page + 1);
+  };
+  //щоб зреагувати на сторінку і виконати шттп запит
+  useEffect(() => {
+    async function getArticles() {
+      try {
+        setLoading(true);
+        setError(false);
+        const data = await fetchArticles(newTopic, page);
+        setArticles(data);
+      } catch (error) {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getArticles();
+  }, [page,topic]);
   //const addUser = (newUser) => {
   // console.log("Adding new user", newUser);
   // };
@@ -87,6 +106,7 @@ export default function App() {
       {error && <p>Oops...The was an error,pleas reload this page</p>}
       {/*Не треба рендерити порожній елемент,завжди є умова/в даному кейсі не буде порожнього юл, а буде рендеритися коли приходитимуть дані з бекенду */}
       {articles.length > 0 && <ArticleList items={articles} />}
+      <button onClick={handleLoadMore}>Load more</button>
 
       {/*<h1>Forms with Formik</h1>
       <UserForm onAdd={addUser} />

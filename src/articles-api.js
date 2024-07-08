@@ -2,13 +2,13 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://hn.algolia.com/api/v1";
 
-export const fetchArticles = async (topic) => {
+export const fetchArticles = async (topic,currentPage) => {
   //const res = await axios.get(`/search?query=${topic}&page=2&hitsPerPage=20`);
     //можна як пер.вар, але краще через об'єкт парамс
   const res = await axios.get("/search", {
     params: {
       query: topic,
-      page: 1,
+      page: currentPage,
       hitsPerPage: 10,
     },
   });
